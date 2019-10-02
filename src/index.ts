@@ -1,17 +1,10 @@
 import micro, { send, json } from 'micro'
 import { router, get, post, ServerResponse, ServerRequest } from 'microrouter'
-import * as line from '@line/bot-sdk'
-
-const { LINE_CHANNEL_ACCESS_TOKEN, LINE_CHANNEL_SECRET } = process.env
-
-const config = {
-  channelAccessToken: LINE_CHANNEL_ACCESS_TOKEN!,
-  channelSecret: LINE_CHANNEL_SECRET!,
-}
+import { handleWebHookEvent } from './webhook'
 
 const webHookEvent = async (req: ServerRequest, res: ServerResponse) => {
   const data: any = await json(req)
-  await Promise.all(data.events.map(handleEvent))
+  await Promise.all(data.events.map(handleWebHookEvent))
   return send(res, 200, 'ok')
 }
 
@@ -19,24 +12,10 @@ const notFound = (_: ServerRequest, res: ServerResponse) =>
   send(res, 404, 'Not found route')
 
 const handler = router(
-  get('/', () => 'Hello World!'),
+  get('/', async () => 'Hello World!'),
   post('/', webHookEvent),
   get('/*', notFound)
 )
-
-const client = new line.Client(config)
-function handleEvent(event: any) {
-  if (event.type !== 'message' || event.message.type !== 'text') {
-    // TODO: reply suggest message
-    return Promise.resolve(null)
-  }
-
-  // TODO: reply depends on message -> foo, bar, hoge
-  return client.replyMessage(event.replyToken, {
-    type: 'text',
-    text: event.message.text,
-  })
-}
 
 const server = micro(handler)
 
