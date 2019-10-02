@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "name": "twitterati",
+  "alias": "twitterati.now.sh",
+  "builds": [
+    { "src": "src/index.js", "use": "@now/node-server" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/src/index.js" }
+  ]
+}

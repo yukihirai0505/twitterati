@@ -1,0 +1,14 @@
+{
+  "name": "twitterati",
+  "version": "1.0.0",
+  "repository": "https://github.com/yukihirai0505/twitterati.git",
+  "author": "Yuki Hirai <yukihirai0505@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "micro": "^9.3.4",
+    "micro-fork": "^2.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  }
+}
