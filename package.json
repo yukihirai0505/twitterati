@@ -9,6 +9,7 @@
     "deploy": "now ."
   },
   "dependencies": {
+    "@line/bot-sdk": "^6.8.2",
     "micro": "^9.3.4",
     "microrouter": "^3.1.3"
   },
